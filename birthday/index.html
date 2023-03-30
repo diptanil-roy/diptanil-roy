@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>What's the Message?</title>
+    <style>
+      
+    </style>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body class="unselectable">
+    <div class="container">
+        <h1 id = "Title"; style="text-align:center;">What's the Message?</h1>
+        <h2 id = "Line1"; style="text-align:center;">Your friends have sent you birthday messages.</h2>
+        <h2 id = "Line2"; style="text-align:center;">The monsters under your bed have however intercepted your messages.</h2>
+        <h2 id = "Line3"; style="text-align:center;">You must perform a complex tango of movements to retrieve each message and read them.</h2>
+        <h2 id = "Line4"; style="text-align:center; margin-bottom: 1vh;">Remember, if the monsters get you, you must start from the beginning.</h2>
+        <div class="button-container">
+          <button id="start-the-game"; onclick="game.start();">START</button>
+          <button onclick="window.location.reload();">RESET</button>
+        </div>
+        <h3 id=""> </h3>
+        <button id="message-toggle"; onclick="game.ToggleMessages();">Do Not Show Messages</button>
+        <h4 id=""> </h4>
+        <div id="play-area" tabindex="0">
+
+        </div>
+        <h5 id=""> </h5>
+        <div class="gamepad-container" id="touch-controls">
+          <button class="block" id="up-btn">&#x2191;</button>
+          <button class="block" id="down-btn">&#x2193;</button>
+
+          <button class="block" id="left-btn">&#x2190;</button>
+          <button class="block" id="right-btn">&#x2192;</button>
+        </div>
+        <h5 id=""> </h5> 
+    </div>
+    <audio id="obstacleHitSound" src="Obst.mp3"></audio>
+    <audio id="prizeSound" src="EnvelopeOpener.mp3"></audio>
+    <script src="game.js"></script>
+  </body>
+</html>
