@@ -705,7 +705,7 @@ const game = {
         ctx.fillText(line, lineX, lineY);
     }
 
-    let animationDuration = 10000; // 4 seconds
+    let animationDuration = 15000; // 15 seconds
     let animationStartTime = performance.now();
 
     let animate = () => {
