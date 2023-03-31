@@ -80,7 +80,7 @@ const game = {
     this.prizeSound = document.getElementById('prizeSound');
     
     this.canvas = document.createElement("canvas");
-    if (playArea.children.length != 0) playArea.removeChild(playArea.firstElementChild);
+    // if (playArea.children.length != 0) playArea.removeChild(playArea.firstElementChild);
     playArea.appendChild(this.canvas);
     this.ctx = this.canvas.getContext("2d");
     
@@ -490,15 +490,22 @@ const game = {
   },
 
   checkCollisions: function() {
-    // Check for collisions between the player and obstacles
-    for (const obstacle of this.obstacles) {
-      if (this.isColliding(this.player, obstacle)) {
-        this.resetplayer();
-        this.obstacleHitSound.currentTime = 0;
-        this.obstacleHitSound.play();
-        return;
-      }
+
+    // Check if the player has collected all the prizes
+    if (this.prizes.length === 0 && !this.animationPlaying) {
+      this.endGame();
+      return;
     }
+
+    // Check for collisions between the player and obstacles
+    // for (const obstacle of this.obstacles) {
+    //   if (this.isColliding(this.player, obstacle)) {
+    //     this.resetplayer();
+    //     this.obstacleHitSound.currentTime = 0;
+    //     this.obstacleHitSound.play();
+    //     return;
+    //   }
+    // }
     
     // Check for collisions between the player and prizes
     for (let i = 0; i < this.prizes.length; i++) {
@@ -528,12 +535,6 @@ const game = {
         }
         // animationPlaying = false;
       }
-    }
-    
-    // Check if the player has collected all the prizes
-    if (this.prizes.length === 0) {
-      this.endGame();
-      return;
     }
   },
     isColliding: function(a, b) {
@@ -595,24 +596,30 @@ const game = {
   },
   showWinAnimation: function() {
   // Clear the canvas
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    playArea.removeChild(playArea.lastElementChild);
 
-    // Display the message
-    this.ctx.font = "50px Arial";
-    this.ctx.fillStyle = "white";
-    this.ctx.textAlign = "center";
-    this.ctx.fillText("Congratulations, you won!", this.canvas.width / 2, this.canvas.height / 2);
+    document.getElementById('envelope-buttons').style.display = 'block';
 
-    // Wait for a few seconds before restarting the game
-    setTimeout(() => {
-      this.start();
-    }, 3000);
+    const envps = document.querySelectorAll(".envelope");
+
+    for (let i = 0; i < envps.length; i++) {
+      envps[i].addEventListener("click", () => {
+        this.showPrizeAnimation(i, true);
+      });
+      if ('ontouchstart' in window || navigator.maxTouchPoints){
+        envps[i].addEventListener("touchstart", () => {
+          this.showPrizeAnimation(i, true);
+        });
+      }
+    }
+
   },
   ToggleMessages: function() {
     this.donotshowanimation = !this.donotshowanimation;
     console.log(this.donotshowanimation);
   },
-  showPrizeAnimation: function() {
+  showPrizeAnimation: function(mesnum, dontanimate) {
     animationPlaying = true;
     let animationCanvas = document.createElement('canvas');
     animationCanvas.width = GAME_WIDTH*0.6;
@@ -625,7 +632,7 @@ const game = {
     animationCanvas.style.top = playArea.offsetTop + GAME_HEIGHT*0.2 + 'px';
     animationCanvas.style.left = playArea.offsetLeft + GAME_WIDTH*0.2 + 'px';
     if ('ontouchstart' in window || navigator.maxTouchPoints){
-      animationCanvas.style.top = playArea.offsetTop + GAME_HEIGHT*0.1 + 'px';
+      animationCanvas.style.top = playArea.offsetTop + GAME_HEIGHT*0.15 + 'px';
       animationCanvas.style.left = playArea.offsetLeft + GAME_WIDTH*0.1 + 'px';
     }
 
@@ -638,15 +645,8 @@ const game = {
 
     var message = null;
 
-    // while ( this.messages.length ){
-    //   let index = Math.floor( Math.random()*this.messages.length );
-    //   message = this.messages[index];
-    //   this.messages.splice( index, 1 );
-    // }
-
-    // console.log(this.score);
-
-    message = this.messages[messageorder[this.score - 1] - 1];
+    if (!this.isGameOver) message = this.messages[messageorder[this.score - 1] - 1];
+    else message = this.messages[mesnum];
 
     let fontval = Math.min(animationCanvas.width * 0.05, animationCanvas.height * 0.05); // adjust the multiplier as needed
 
@@ -688,14 +688,6 @@ const game = {
 
       iter+=1;
     }
-    
-    
-
-    // let lineX = (animationCanvas.width - messageWidth) / 2;
-    // let lineY = (animationCanvas.height - lineHeight * lines.length) / 2 + lineHeight * longestLineIndex;
-
-    // // let lineY = animationCanvas.height / 2 - lines.length * 25;
-    // let lineY = animationCanvas.height / 2 - (lines.length - 1) / 2 * lineHeight;
 
     for (let i = 0; i < lines.length; i++) {
         let line = lines[i];
@@ -706,6 +698,7 @@ const game = {
     }
 
     let animationDuration = 15000; // 15 seconds
+    if (dontanimate) animationDuration*=10;
     let animationStartTime = performance.now();
 
     let animate = () => {
@@ -743,6 +736,7 @@ const game = {
   endGame: function() {
     // End the game and display the game over message
     this.isGameOver = true;
+    this.showWinAnimation();
   },
   messages: [
     "Pritha says:\nHey Pankti, a very happy birthday to you!\nI hope you find all the great results from your work too!\nThank you for being a positive support,\nwise beyond your years,\nand reigniting a passion for old clothes! 😛❤️\nHere's hoping you have an amazing day, year and life.\nI cannot wait to be reunited with my friend\n(the look on Diptanil's face)! ❤️",
@@ -799,6 +793,15 @@ document.addEventListener("DOMContentLoaded", function() {
     button.textContent = "Do Not Show Messages";
   }
 
-});
+  });
+
+  // window.onload = function() {
+    
+  // }
+
+  document.getElementById('envelope-buttons').style.display = 'none';
+
+  // console.log("Images = ", document.getElementById('envelope-buttons'));
+  // document.getElementById('envelope-buttons').style.display = 'block';
 });
 

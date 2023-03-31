@@ -12,6 +12,8 @@
   </head>
 
   <body class="unselectable">
+    <audio id="obstacleHitSound" src="Obst.mp3"></audio>
+    <audio id="prizeSound" src="EnvelopeOpener.mp3"></audio>
     <div class="container">
         <h1 id = "Title"; style="text-align:center;">What's the Message?</h1>
         <h2 id = "Line1"; style="text-align:center;">Your friends have sent you birthday messages.</h2>
@@ -26,7 +28,18 @@
         <button id="message-toggle"; onclick="game.ToggleMessages();">Do Not Show Messages</button>
         <h4 id=""> </h4>
         <div id="play-area" tabindex="0">
-
+          <div class="envelope-container" id='envelope-buttons'>
+            <button id="envelope-1" class="envelope"><img src="envelope.png"></button>
+            <button id="envelope-2" class="envelope"><img src="envelope.png"></button>
+            <button id="envelope-3" class="envelope"><img src="envelope.png"></button>
+            <button id="envelope-4" class="envelope"><img src="envelope.png"></button>
+            <button id="envelope-5" class="envelope"><img src="envelope.png"></button>
+            <button id="envelope-6" class="envelope"><img src="envelope.png"></button>
+            <button id="envelope-7" class="envelope"><img src="envelope.png"></button>
+            <button id="envelope-8" class="envelope"><img src="envelope.png"></button>
+            <button id="envelope-9" class="envelope"><img src="envelope.png"></button>
+            <button id="envelope-10" class="envelope"><img src="envelope.png"></button>
+          </div>
         </div>
         <h5 id=""> </h5>
         <div class="gamepad-container" id="touch-controls">
@@ -38,8 +51,6 @@
         </div>
         <h5 id=""> </h5> 
     </div>
-    <audio id="obstacleHitSound" src="Obst.mp3"></audio>
-    <audio id="prizeSound" src="EnvelopeOpener.mp3"></audio>
     <script src="game.js"></script>
   </body>
 </html>

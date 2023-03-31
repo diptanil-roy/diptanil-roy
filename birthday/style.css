@@ -40,26 +40,6 @@ html, body {
 #left-btn {
   margin-right: 10px;
 }
-/*.up-down {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  margin-top: 1vh;
-  margin-bottom: 1vh;
-}
-
-.gamepad {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-right: 2vw;
-  align-items: center;
-  width: 100%;
-  margin-top: 1vh;
-  margin-bottom: 1vh;
-}*/
 
 .container {
   min-height: 100%;
@@ -127,16 +107,50 @@ h5 {
   justify-content: center;
 }
 
-/*.block.active {
-  background-color: white;
-}*/
-
 .button-container {
   display: flex;
 }
 
 .button-container button {
   margin-right: 2px;
+}
+
+#envelope-buttons {
+  display: none;
+}
+
+.envelope-container {
+/*  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin-left: 10vw;
+  margin-right: 20vw;
+  margin: 0 10vw;
+  margin-top: 1vh;
+  margin-bottom: 1vh;*/
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
+
+.envelope {
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+}
+
+.envelope img {
+  width: 4vw;
+  height: 3vh;
+  object-fit: contain;
 }
 
 @media (pointer: fine) {
