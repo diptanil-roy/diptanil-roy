@@ -498,14 +498,14 @@ const game = {
     }
 
     // Check for collisions between the player and obstacles
-    // for (const obstacle of this.obstacles) {
-    //   if (this.isColliding(this.player, obstacle)) {
-    //     this.resetplayer();
-    //     this.obstacleHitSound.currentTime = 0;
-    //     this.obstacleHitSound.play();
-    //     return;
-    //   }
-    // }
+    for (const obstacle of this.obstacles) {
+      if (this.isColliding(this.player, obstacle)) {
+        this.resetplayer();
+        this.obstacleHitSound.currentTime = 0;
+        this.obstacleHitSound.play();
+        return;
+      }
+    }
     
     // Check for collisions between the player and prizes
     for (let i = 0; i < this.prizes.length; i++) {
