@@ -127,30 +127,17 @@ const game = {
     this.drawPrizes();
     this.drawObstacles();
     this.drawPlayer();
-
-    // let fps = null;
-    // this.countfps().then((mean) => {console.log(mean);});
     
     let fps = await this.countfps();
-
-    // console.log(fps);
 
     if (fps < 90){
       PLAYER_SPEED = PLAYER_SPEED + (90 - fps)/90*PLAYER_SPEED;
       OBSTACLE_SPEED = OBSTACLE_SPEED + (90 - fps)/90*OBSTACLE_SPEED;
     }
 
-    // console.log(this.messages);
-    // for (let i = 0; i < messageorder.length; i++){
-    //   console.log(messageorder[i]-1, this.messages[messageorder[i]-1]);
-    // }
-    // Add canvas to the DOM
-
     if ('ontouchstart' in window || navigator.maxTouchPoints){
       this.addtouchcontrols();
     }
-
-    // game.start();
   },
   addtouchcontrols: function(){
 
@@ -168,12 +155,6 @@ const game = {
     downButton.addEventListener("touchend", (event) => {this.keyEventHandler(event); downButton.style.backgroundColor = "#04AA6D";});
     leftButton.addEventListener("touchend", (event) => {this.keyEventHandler(event); leftButton.style.backgroundColor = "#04AA6D";});
     rightButton.addEventListener("touchend", (event) => {this.keyEventHandler(event); rightButton.style.backgroundColor = "#04AA6D";});
-
-    // upButton.addEventListener("touchend", this.keyEventHandler.bind(this));
-    // downButton.addEventListener("touchend", this.keyEventHandler.bind(this));
-    // leftButton.addEventListener("touchend", this.keyEventHandler.bind(this));
-    // rightButton.addEventListener("touchend", this.keyEventHandler.bind(this));
-
   },
   countfps: function () {
     return new Promise((resolve) => {
@@ -231,15 +212,9 @@ const game = {
         this.obstacles.push(obstacle);
       }
     }
-
-    // console.log(OBSTACLE_MASS);
-    // console.log(this.obstacles.length);
-    // console.log(this.prizes.length);
   },
   spawnPrizes: function() {
-      // Generate random positions for prizes
-
-    // console.log(this.prizes.length)
+    // Generate random positions for prizes
 
     while (this.prizes.length < MAX_PRIZES){
       const x = Math.random() * (GAME_WIDTH - PRIZE_SIZE);
@@ -286,15 +261,6 @@ const game = {
     // if (event.type === "touchmove") {
       for (let i = 0; i < event.touches.length; i++) {
         let touch = event.touches[i];
-        // if (upButton && touch.target === upButton) {
-        //   keys["ArrowUp"] = true; keys["ArrowDown"] = false; keys["ArrowLeft"] = false; keys["ArrowRight"] = false;
-        // } else if (downButton && touch.target === downButton) {
-        //   keys["ArrowUp"] = false; keys["ArrowDown"] = true; keys["ArrowLeft"] = false; keys["ArrowRight"] = false;
-        // } else if (leftButton && touch.target === leftButton) {
-        //   keys["ArrowUp"] = false; keys["ArrowDown"] = false; keys["ArrowLeft"] = true; keys["ArrowRight"] = false;
-        // } else if (rightButton && touch.target === rightButton) {
-        //   keys["ArrowUp"] = false; keys["ArrowDown"] = false; keys["ArrowLeft"] = false; keys["ArrowRight"] = true;
-        // }
 
         if (upButton && touch.target === upButton) {
           keys["ArrowUp"] = true;
@@ -316,15 +282,6 @@ const game = {
 
   movePlayer: function() {
     // Move the player based on arrow key input
-
-    // const now = Date.now();
-
-    // if (!this.lastTime) {
-    //   this.lastTime = now;
-    // }
-
-    // let deltaTime = (now - this.lastTime) / 1000; // convert to seconds
-    // this.lastTime = now;
 
     let deltaTime = 1;
 
@@ -362,18 +319,12 @@ const game = {
     // Clear the canvas
     this.ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-    // console.log(animationPlaying);
-
     // Move the obstacles and prizes
     const now = Date.now();
     const dt = (now - this.lastTime) / 10;  // Time elapsed since last frame, in seconds
     this.lastTime = now;
 
-    // this.moveObstacles(1);
-
     this.moveObstacles(1);
-    // this.movePrizes();
-
     this.movePlayer(1);
     
     // Check for collisions
@@ -384,14 +335,11 @@ const game = {
     this.drawPrizes();
     this.drawObstacles();
     this.drawPlayer();
-    
-    // console.log(this.obstacles.length);
-    
+        
     // Check if the game is over
     if (!this.isGameOver) {
       if (!animationPlaying) {
         requestAnimationFrame(this.loop.bind(this));
-        // console.log("Perf = ", 1000/performance.now());
       }
     } else {
       this.drawGameOver();
@@ -549,8 +497,6 @@ const game = {
 
   drawPlayer: function() {
     // Draw the player on the canvas
-    // this.ctx.fillStyle = this.player.color;
-    // this.ctx.fillRect(this.player.x, this.player.y, this.player.size, this.player.size);
     var playerim = new Image();
     playerim.src = '8bitpunk.png';
     this.ctx.drawImage(playerim, this.player.x, this.player.y, this.player.size, this.player.size);
@@ -558,9 +504,6 @@ const game = {
   drawObstacles: function() {
     // Draw the obstacles on the canvas
     for (const obstacle of this.obstacles) {
-      // this.ctx.fillStyle = obstacle.color;
-      // this.ctx.fillRect(obstacle.x, obstacle.y, obstacle.size, obstacle.size);
-
       const image = new Image();
       image.src = 'obst.png';
       this.ctx.drawImage(image, obstacle.x, obstacle.y, obstacle.size + 5, obstacle.size + 5);
@@ -569,9 +512,6 @@ const game = {
   drawPrizes: function() {
     // Draw the prizes on the canvas
     for (const prize of this.prizes) {
-      // this.ctx.fillStyle = prize.color;
-      // this.ctx.fillRect(prize.x, prize.y, prize.size, prize.size);
-
       const image = new Image();
       image.src = 'envelope.png';
       this.ctx.drawImage(image, prize.x, prize.y, PRIZE_SIZE, PRIZE_SIZE*0.75);
@@ -584,18 +524,14 @@ const game = {
     this.ctx.fillText(`Score: ${this.score}`, SCORE_X, SCORE_Y);
   },
   drawGameOver: function() {
-    // Draw the game over message on the canvas
-    // this.ctx.fillStyle = GAME_OVER_COLOR;
-    // this.ctx.font = GAME_OVER_FONT;
-    // this.ctx.fillText(GAME_OVER_MESSAGE, GAME_OVER_X, GAME_OVER_Y);
-    // this.ctx.fillText(`Final Score: ${this.score}`, GAME_OVER_SCORE_X, GAME_OVER_SCORE_Y);
+    this.showWinAnimation();
   },
   resetplayer: function() {
     this.player.x = Math.random() * (GAME_WIDTH - PLAYER_SIZE);
     this.player.y = GAME_HEIGHT - PLAYER_SIZE;
   },
   showWinAnimation: function() {
-  // Clear the canvas
+    // Clear the canvas
     // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     playArea.removeChild(playArea.lastElementChild);
 
@@ -632,7 +568,7 @@ const game = {
     animationCanvas.style.top = playArea.offsetTop + GAME_HEIGHT*0.2 + 'px';
     animationCanvas.style.left = playArea.offsetLeft + GAME_WIDTH*0.2 + 'px';
     if ('ontouchstart' in window || navigator.maxTouchPoints){
-      animationCanvas.style.top = playArea.offsetTop + GAME_HEIGHT*0.15 + 'px';
+      animationCanvas.style.top = playArea.offsetTop + GAME_HEIGHT*0.18 + 'px';
       animationCanvas.style.left = playArea.offsetLeft + GAME_WIDTH*0.1 + 'px';
     }
 
@@ -653,12 +589,10 @@ const game = {
     if ('ontouchstart' in window || navigator.maxTouchPoints){
       fontval = Math.min(animationCanvas.width * 0.03, animationCanvas.height * 0.03); // adjust the multiplier as needed
     }
-    // message = 'You won a prize!';
+
     ctx.fillStyle = 'white';
-    // ctx.font = `bold ${fontSize}vw sans-serif`;
 
     let lineHeight = 20; // set the line height
-    // if ('ontouchstart' in window || navigator.maxTouchPoints) lineHeight = 10;
 
     let lines = message.split('\n');
     let longestLineIndex = 0;
@@ -707,22 +641,15 @@ const game = {
       if (progress >= 1) {
         playArea.removeChild(animationCanvas);
         animationPlaying = false;
-        // playArea.removeChild(playArea.lastElementChild)
         this.loop();
         return;
       }
       ctx.clearRect(0, 0, animationCanvas.width, animationCanvas.height);
       ctx.fillStyle = 'rgba(255, 255, 255, ' + (1 - progress/2) + ')';
-      // ctx.fillStyle = 'rgba(15, 243, 15, ' + (1 - progress) + ')';
-      // ctx.fillStyle = 'white';
       ctx.fillRect(0, 0, animationCanvas.width, animationCanvas.height);
-      // ctx.fillStyle = '#0ff30f';
       ctx.fillStyle = 'black';
       ctx.font = 'bold ' + fontval + 'px sans-serif';
-      // messageWidth = ctx.measureText(message).width;
-      // x = (animationCanvas.width) / 2 - messageWidth / 2;
-      // y = animationCanvas.height / 2;
-      // ctx.fillText(message, x, y);
+
       for (let i = 0; i < lines.length; i++) {
         let line = lines[i];
         let lineX = (animationCanvas.width - ctx.measureText(line).width) / 2;
@@ -736,7 +663,6 @@ const game = {
   endGame: function() {
     // End the game and display the game over message
     this.isGameOver = true;
-    this.showWinAnimation();
   },
   messages: [
     "Pritha says:\nHey Pankti, a very happy birthday to you!\nI hope you find all the great results from your work too!\nThank you for being a positive support,\nwise beyond your years,\nand reigniting a passion for old clothes! 😛❤️\nHere's hoping you have an amazing day, year and life.\nI cannot wait to be reunited with my friend\n(the look on Diptanil's face)! ❤️",
@@ -782,8 +708,6 @@ document.addEventListener("DOMContentLoaded", function() {
     startbutton.disabled = true;
   });
 
-  // if (game.isPlaying) startbutton.disabled = true;
-
   const button = document.getElementById("message-toggle");
 
   button.addEventListener("click", function() {
@@ -795,13 +719,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   });
 
-  // window.onload = function() {
-    
-  // }
 
   document.getElementById('envelope-buttons').style.display = 'none';
-
-  // console.log("Images = ", document.getElementById('envelope-buttons'));
-  // document.getElementById('envelope-buttons').style.display = 'block';
 });
 
